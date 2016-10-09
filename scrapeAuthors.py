@@ -78,11 +78,38 @@ def vocabularize(textList):
 
     word_freq = nltk.FreqDist(itertools.chain(*vocabList))
 
+    #make this a pandas table
+    vocabDF = pd.DataFrame([(word[0][0],word[0][1],word[1]) for word in word_freq.items()],columns=['word','POS','count'])
+    vocabDF.sort('count',ascending=False,inplace = True)
+
+    #take a look at our pos
+    vocabDF.groupby('POS').count().sort('count',ascending=False)
+
+    #now look at weak VS robust words
+    minOccurences = 3
+    robustWords = vocabDF[vocabDF['count'] >= minOccurences]
+    weakWords = vocabDF[vocabDF['count'] < minOccurences]
+
+
+    # isolate POS for words below threshold
+    # count them and if below a threshold throw them out
+    # enumberate those POS
+    # set index column as enumerated POS
+    # if count for a word is above the threshold set unique index
+
+
+
     sortedVocab = sorted(word_freq.items(), key=lambda x: (x[1], x[0]), reverse=True)
 
-    minOccurences = 2
+
+
     robustWords = [x for x in sortedVocab if x[1] >= minOccurences]
     weakWords = [x for x in sortedVocab if x[1] < minOccurences]
+
+    word2DiffPOS = [word for word in weakWords if word in robustWords]
+    weakWordsPOS = np.unique([word[1] for word in weakWords])
+
+
 
 
     #now look for infrequent words
