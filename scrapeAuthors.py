@@ -6,7 +6,7 @@ import numpy as np
 import re
 import gutenbergMetadata as gbMeta
 import gutenbergText as gbTxt
-
+import itertools
 
 def gatherMetadata():
     md = gbMeta.readmetadata()
@@ -34,31 +34,52 @@ def gatherMetadata():
 def gatherAuthorTexts(authorMetadata):
 
     authorMetadata = authorMetadata[authorMetadata['type']=='Text']
-    authorData = authorMetadata[authorMetadata['english']==True]
+    authorMetadata = authorMetadata[authorMetadata['english']==True]
 
     textList = []
-    for ind in authorData.index:
-        print('extractin ' + authorData.ix[ind,'title'])
-        text = gbTxt.load_etext(ind)
+    for ind in authorMetadata.index:
+        print('extractin ' + authorMetadata.ix[ind,'title'])
+        text = gbTxt.load_etext(authorMetadata.ix[ind,'id'])
         text = gbTxt.strip_headers(text)
-        text = re.sub('\\r',' \\r ',text)
-        text = re.sub('\\n',' \\n ',text)
+        textList.append(text)
+        #text = re.sub('\\r',' \\r ',text)
+        #text = re.sub('\\n',' \\n ',text)
         #text = re.sub('"',' " ',text)
-        textList.append(text.splitlines())
+        #textList.append(text.splitlines())
 
     return textList
 
-#isolate Jane Austin Texts
-metadata = pd.read_csv('listOfEnglishDocs.csv')
-janeAustenData = metadata[metadata['author'] == 'Austen, Jane']
-#trying to just restrict to books
-janeAustenData = janeAustenData.ix[[101,115,133,150,153,908,1298]]
 
-janeAustenTexts = gatherAuthorTexts(janeAustenData)
+def vocabularize(textList):
+    #a bit of a catch all messy function
+    #takes any list of lists of texts and will extract the vocabulary from it
+    vocabList = []
 
-def vocularize():
+    def loopTexts(textBranch):
+        #recursivly check lists for their text compenents (this could get messy but does add flexability)
+        if type(textBranch[0]) == unicode:
+            #assumption here that if the first element is a str then they all are
+            #tokenizedText = [nltk.word_tokenize(thisText) for thisText in textBranch]
+            tokenizedText = [nltk.pos_tag(nltk.word_tokenize(thisText)) for thisText in textBranch]
+            vocabList.extend(tokenizedText)
+        else:
+            for nextText in textBranch:
+                loopTexts(nextText)
+
+    loopTexts(textList)
+
+
+
+
+    # Count the word frequencies
+    word_freq = nltk.FreqDist(itertools.chain(*vocabList))
+    print("Found %d unique words tokens." % len(word_freq.items()))
+
+
+
     # need to get vocab
     # need to cut off vocab and then replace words with their part of speech
+    return vocab
 
 def sentenceTrainer():
     #isolate out all sentences
@@ -98,6 +119,19 @@ def isolateTextCompentents(textList):
 
     tokenizer = nltk.tokenize.RegexpTokenizer('CHAPTER',gaps=True)
     chapters = tokenizer.tokenize(text)
+
+##### isolate Jane Austin Texts ####
+def main():
+    #TODO::
+    # data currently stored in a parent directory but we should change this to the main directory
+    # and then add a git ignore to keep it from synching
+    metadata = pd.read_csv('../listOfEnglishDocs.csv')
+    janeAustenData = metadata[metadata['author'] == 'Austen, Jane']
+    #trying to just restrict to books
+    janeAustenData = janeAustenData.ix[[101,115,133,150,153,908,1298]]
+
+    janeAustenTexts = gatherAuthorTexts(janeAustenData)
+
 
 
 powSentences = []

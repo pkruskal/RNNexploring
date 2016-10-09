@@ -10,7 +10,18 @@ from _domainModel_text import TEXT_START_MARKERS
 from _domainModel_text import LEGALESE_END_MARKERS
 from _domainModel_text import LEGALESE_START_MARKERS
 
-_TEXT_CACHE = './Data/text'
+if os.path.exists('.../Data/text'):
+    _TEXT_CACHE = '.../Data/text'
+elif os.path.exists('../Data/text'):
+    _TEXT_CACHE = '../Data/text'
+elif os.path.exists('./Data/text'):
+    _TEXT_CACHE = './Data/text'
+else:
+    print('making data path')
+    _TEXT_CACHE = './Data/text'
+    os.makedirs(os.path.dirname(_TEXT_CACHE))
+
+print('using path ' + _TEXT_CACHE)
 
 def _format_download_uri(etextno):
     """Returns the download location on the Project Gutenberg servers for a
@@ -63,9 +74,7 @@ def load_etext(etextno, refresh_cache=False):
 
     if refresh_cache:
         remove(cached)
-    if not os.path.exists(os.path.dirname(cached)):
-        if not os.path.exists(os.path.dirname(_TEXT_CACHE)):
-            os.makedirs(os.path.dirname(_TEXT_CACHE))
+    if not os.path.exists(cached):
         download_uri = _format_download_uri(etextno)
         response = requests.get(download_uri)
         response.encoding = 'utf-8'
