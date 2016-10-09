@@ -62,11 +62,25 @@ def vocabularize(textList):
             #tokenizedText = [nltk.word_tokenize(thisText) for thisText in textBranch]
             tokenizedText = [nltk.pos_tag(nltk.word_tokenize(thisText)) for thisText in textBranch]
             vocabList.extend(tokenizedText)
+            print('finished sentences for a branch')
         else:
             for nextText in textBranch:
                 loopTexts(nextText)
 
     loopTexts(textList)
+
+    word_freq = nltk.FreqDist(itertools.chain(*vocabList))
+
+    sortedVocab = sorted(word_freq.items(), key=lambda x: (x[1], x[0]), reverse=True)
+
+    minOccurences = 2
+    robustWords = [x for x in sortedVocab if x[1] >= minOccurences]
+    weakWords = [x for x in sortedVocab if x[1] < minOccurences]
+
+
+    #now look for infrequent words
+    #check if word exists with different parts of speach, and then match to that word
+    #finnaly check if part of speach exists within the other low feq. occurring words
 
 
 
@@ -81,15 +95,19 @@ def vocabularize(textList):
     # need to cut off vocab and then replace words with their part of speech
     return vocab
 
-def sentenceTrainer():
+def sentenceTrainer(bookList):
     #isolate out all sentences
+    sentences = [nltk.sent_tokenize(book) for book in bookList]
+    return sentences
+
+
+
 
 def chapterTrainer():
     #isolate chapters and then sentences
 
 def paragraphTrainer():
     #try to isolate out paragraps?
-
 
 def isolateTextCompentents(textList):
     '''
@@ -132,6 +150,11 @@ def main():
 
     janeAustenTexts = gatherAuthorTexts(janeAustenData)
 
+    janeAustenSentences = sentenceTrainer(janeAustenTexts)
+
+
+    vocabularize(janeAustenSentences)
+
 
 
 powSentences = []
@@ -161,7 +184,6 @@ import urllib
 import re
 import time
 import sys
-
 
 
 authorListUrl = 'https://www.gutenberg.org/browse/authors/a'
