@@ -49,6 +49,12 @@ def gautherAuthorTexts(author,metadata):
         textList.append(text.splitlines())
 
 
+words = nltk.tokenize.wordpunct_tokenize(text)
+
+words = nltk.tokenize.line_tokenize(text)
+sentences = nltk.sent_tokenize(text)
+posWords = nltk.pos_tag(text)
+
 lines = text.splitlines()
 for i,line in enumerate(lines):
     if len(lines[i]) == 0:
