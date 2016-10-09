@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d94a8d1c-f949-428e-a842-5d8ed64519ef" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/scrapeAuthors.py" afterPath="$PROJECT_DIR$/scrapeAuthors.py" />
-    </list>
+    <list default="true" id="d94a8d1c-f949-428e-a842-5d8ed64519ef" name="Default" comment="" />
     <ignored path="AurthorAI.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -26,13 +24,16 @@
       <file leaf-file-name="scrapeAuthors.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/scrapeAuthors.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.72684085">
-              <caret line="75" column="21" selection-start-line="75" selection-start-column="21" selection-end-line="75" selection-end-column="21" />
+            <state vertical-scroll-proportion="0.6232877">
+              <caret line="81" column="0" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
               <folding>
                 <element signature="e#22#41#0" expanded="true" />
                 <element signature="e#192#1266#0" expanded="false" />
                 <element signature="e#1313#1884#0" expanded="false" />
-                <element signature="e#3830#4811#0" expanded="false" />
+                <element signature="e#2093#2901#0" expanded="false" />
+                <element signature="e#3760#3871#0" expanded="false" />
+                <element signature="e#4039#5020#0" expanded="false" />
+                <element signature="e#4039#4339#1" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -91,7 +92,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -112,12 +112,15 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
       <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://C:/Users/peter/Dropbox/AuthorAI/AurthorAI/gutenbergText.py" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+    <property name="settings.editor.splitter.proportion" value="0.2" />
   </component>
   <component name="RunManager">
     <configuration default="true" type="PythonConfigurationType" factoryName="Python">
@@ -257,11 +260,11 @@
     <frame x="9" y="9" width="1820" height="977" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22668174" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2261504" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4317618" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.43101344" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -282,11 +285,27 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="5" />
+      <option name="time" value="6" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/scrapeAuthors.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <element signature="e#22#41#0" expanded="true" />
+            <element signature="e#192#1266#0" expanded="false" />
+            <element signature="e#1313#1884#0" expanded="false" />
+            <element signature="e#2093#2901#0" expanded="false" />
+            <element signature="e#3760#3871#0" expanded="false" />
+            <element signature="e#4039#5020#0" expanded="false" />
+            <element signature="e#4039#4339#1" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/scrapeAuthors.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -295,7 +314,10 @@
             <element signature="e#22#41#0" expanded="true" />
             <element signature="e#192#1266#0" expanded="false" />
             <element signature="e#1313#1884#0" expanded="false" />
-            <element signature="e#3830#4811#0" expanded="false" />
+            <element signature="e#2093#2901#0" expanded="false" />
+            <element signature="e#3760#3871#0" expanded="false" />
+            <element signature="e#4039#5020#0" expanded="false" />
+            <element signature="e#4039#4339#1" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -304,7 +326,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -312,7 +333,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.03373016">
           <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -320,21 +340,29 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="56" column="21" selection-start-line="56" selection-start-column="21" selection-end-line="56" selection-end-column="57" />
-          <folding>
-            <element signature="e#2636#4331#0" expanded="false" />
-          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Anaconda/Lib/site-packages/IPython/core/interactiveshell.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="13.490868">
+          <caret line="3031" column="0" selection-start-line="3031" selection-start-column="0" selection-end-line="3031" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/scrapeAuthors.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.72684085">
-          <caret line="75" column="21" selection-start-line="75" selection-start-column="21" selection-end-line="75" selection-end-column="21" />
+        <state vertical-scroll-proportion="0.6232877">
+          <caret line="81" column="0" selection-start-line="81" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
           <folding>
             <element signature="e#22#41#0" expanded="true" />
             <element signature="e#192#1266#0" expanded="false" />
             <element signature="e#1313#1884#0" expanded="false" />
-            <element signature="e#3830#4811#0" expanded="false" />
+            <element signature="e#2093#2901#0" expanded="false" />
+            <element signature="e#3760#3871#0" expanded="false" />
+            <element signature="e#4039#5020#0" expanded="false" />
+            <element signature="e#4039#4339#1" expanded="false" />
           </folding>
         </state>
       </provider>

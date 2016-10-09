@@ -56,8 +56,15 @@ def vocabularize(textList):
     vocabList = []
 
     def loopTexts(textBranch):
+        #trying to make things backword compatible for python 2.7 and 3
+        try:
+            #fails on python 3
+            strFlag = type(textBranch[0]) == unicode
+        except:
+            strFlag = type(textBranch[0]) == str
+
         #recursivly check lists for their text compenents (this could get messy but does add flexability)
-        if type(textBranch[0]) == unicode:
+        if strFlag:
             #assumption here that if the first element is a str then they all are
             #tokenizedText = [nltk.word_tokenize(thisText) for thisText in textBranch]
             tokenizedText = [nltk.pos_tag(nltk.word_tokenize(thisText)) for thisText in textBranch]
@@ -99,9 +106,6 @@ def sentenceTrainer(bookList):
     #isolate out all sentences
     sentences = [nltk.sent_tokenize(book) for book in bookList]
     return sentences
-
-
-
 
 def chapterTrainer():
     #isolate chapters and then sentences
