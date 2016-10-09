@@ -31,16 +31,14 @@ def gatherMetadata():
     return metadata, authors
 
 
-def gautherAuthorTexts(author,metadata):
-    author = 'Austen, Jane'
-    metadata = pd.read_csv('listOfEnglishDocs.csv')
+def gatherAuthorTexts(authorMetadata):
 
-    authorData = metadata[metadata['author'] == author]
-    authorData = authorData[authorData['type']=='Text']
-    authorData = authorData[authorData['english']==True]
+    authorMetadata = authorMetadata[authorMetadata['type']=='Text']
+    authorData = authorMetadata[authorMetadata['english']==True]
 
     textList = []
     for ind in authorData.index:
+        print('extractin ' + authorData.ix[ind,'title'])
         text = gbTxt.load_etext(ind)
         text = gbTxt.strip_headers(text)
         text = re.sub('\\r',' \\r ',text)
@@ -48,12 +46,66 @@ def gautherAuthorTexts(author,metadata):
         #text = re.sub('"',' " ',text)
         textList.append(text.splitlines())
 
+    return textList
 
-words = nltk.tokenize.wordpunct_tokenize(text)
+#isolate Jane Austin Texts
+metadata = pd.read_csv('listOfEnglishDocs.csv')
+janeAustenData = metadata[metadata['author'] == 'Austen, Jane']
+#trying to just restrict to books
+janeAustenData = janeAustenData.ix[[101,115,133,150,153,908,1298]]
 
-words = nltk.tokenize.line_tokenize(text)
-sentences = nltk.sent_tokenize(text)
-posWords = nltk.pos_tag(text)
+janeAustenTexts = gatherAuthorTexts(janeAustenData)
+
+def vocularize():
+    # need to get vocab
+    # need to cut off vocab and then replace words with their part of speech
+
+def sentenceTrainer():
+    #isolate out all sentences
+
+def chapterTrainer():
+    #isolate chapters and then sentences
+
+def paragraphTrainer():
+    #try to isolate out paragraps?
+
+
+def isolateTextCompentents(textList):
+    '''
+    take a list of texts and try to break them down
+    :param textList: a list of strings presumed to be books
+    :return sentenses: a list of sentences within each list of texts (books)
+    :return chapters: a list of sentences within a list of chapters withing a list of texts (books)
+    '''
+    #
+
+    chapterExpression = 'CHAPTER'
+
+    for text in textList
+    words = nltk.tokenize.wordpunct_tokenize(text)
+
+    sentences = nltk.sent_tokenize(text)
+
+    #could also use
+    #Punkt Sentence Tokenizer
+    #tokenizer divides a text into a list of sentences, by using an unsupervised algorithm to build a model for
+    # abbreviation words, collocations, and words that start sentences.
+    #
+    #sent_detector = nltk.data.load('tokenizers/punkt/english.pickle')
+    #sentences2 = sent_detector.tokenize(text.strip())
+    #
+    #this seems to be identical however
+
+    tokenizer = nltk.tokenize.RegexpTokenizer('CHAPTER',gaps=True)
+    chapters = tokenizer.tokenize(text)
+
+
+powSentences = []
+for isentence, sentence in enumerate(sentences):
+    powSentences.append(nltk.pos_tag(nltk.tokenize.wordpunct_tokenize(sentence)))
+    if np.mod(isentence,500) == 0:
+        print('finished sentence ' + str(isentence) + ' out of ' + str(len(sentences)))
+        print(powSentences[-1])
 
 lines = text.splitlines()
 for i,line in enumerate(lines):
