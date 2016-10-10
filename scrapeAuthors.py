@@ -86,7 +86,7 @@ def vocabularize(textList):
     vocabDF.groupby('POS').count().sort('count',ascending=False)
 
     #now look at weak VS robust words
-    minOccurences = 3
+    minOccurences = 10
     robustWords = vocabDF[vocabDF['count'] >= minOccurences]
     weakWords = vocabDF[vocabDF['count'] < minOccurences]
 
