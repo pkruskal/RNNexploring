@@ -1,3 +1,7 @@
 *.xml
 AurthorAI/.idea/.name
 *.iml
+.idea/vcs.xml
+*.xml
+.idea/workspace.xml
+*.xml
