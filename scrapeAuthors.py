@@ -196,7 +196,7 @@ def isolateTextCompentents(textList):
     chapters = tokenizer.tokenize(text)
 
 ##### isolate Jane Austin Texts ####
-def main():
+def janeAustenSetup():
     #TODO::
     # data currently stored in a parent directory but we should change this to the main directory
     # and then add a git ignore to keep it from synching
@@ -211,7 +211,7 @@ def main():
 
     vocab = vocabularize(janeAustenSentences)
 
-
+"""
 
 powSentences = []
 for isentence, sentence in enumerate(sentences):
@@ -269,3 +269,4 @@ from rdflib.graph import Graph
 from rdflib.store import Store
 from rdflib.term import URIRef
 
+"""
