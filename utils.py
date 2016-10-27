@@ -11,7 +11,7 @@ import io
 import array
 from datetime import datetime
 from GRU_tutorial import GRUTheano
-import scrapeAuthors as authors
+import scrapeAuthors as gbData
 
 
 SENTENCE_START_TOKEN = "SENTENCE_START"
@@ -20,7 +20,7 @@ SENTENCE_END_TOKEN = "SENTENCE_END"
 
 def prepairData():
 
-    authors
+    vocab, sentences = gbData.janeAusten()
 
     #preume did main function of scrapeAuthors
     #have vocab DF of words, their index
@@ -37,9 +37,17 @@ def prepairData():
     word_to_index = wordIndexedVocab['index'].to_dict()
     #word_to_index = dict([(w, i) for i, w in enumerate(index_to_word)])
 
-    # Replace all words not in our vocabulary with the unknown token
-    for i, sent in enumerate(tokenized_sentences):
-        tokenized_sentences[i] = [w if w in word_to_index else UNKNOWN_TOKEN for w in sent]
+    # Replace all words not in our vocabulary with the part of speach
+    for i, sent in enumerate(sentences):
+        for word in sent:
+            if word[0] in word_to_index.keys():
+                word = word[0]
+            elif word[1] in word_to_index.keys():
+                word = word[1]
+            else:
+                word = 'Token'
+
+        tokenized_sentences[i] = [w[0] if w[0] in word_to_index.keys() else w[1] for w in sent]
 
     # Create the training data
     X_train = np.asarray([[word_to_index[w] for w in sent[:-1]] for sent in tokenized_sentences])
