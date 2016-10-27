@@ -54,7 +54,7 @@ def vocabularize(textList):
     #a bit of a catch all messy function
     #takes any list of lists of texts and will extract the vocabulary from it
     vocabList = []
-
+    tokenTextList = []
     def loopTexts(textBranch):
         #trying to make things backword compatible for python 2.7 and 3
         try:
@@ -69,6 +69,7 @@ def vocabularize(textList):
             #tokenizedText = [nltk.word_tokenize(thisText) for thisText in textBranch]
             tokenizedText = [nltk.pos_tag(nltk.word_tokenize(thisText)) for thisText in textBranch]
             vocabList.extend(tokenizedText)
+            tokenTextList.append(tokenizedText)
             print('finished sentences for a branch')
         else:
             for nextText in textBranch:
@@ -196,7 +197,7 @@ def isolateTextCompentents(textList):
     chapters = tokenizer.tokenize(text)
 
 ##### isolate Jane Austin Texts ####
-def janeAustenSetup():
+def janeAusten():
     #TODO::
     # data currently stored in a parent directory but we should change this to the main directory
     # and then add a git ignore to keep it from synching
@@ -210,6 +211,8 @@ def janeAustenSetup():
     janeAustenSentences = sentenceTrainer(janeAustenTexts)
 
     vocab = vocabularize(janeAustenSentences)
+
+    return vocab, janeAustenSentences
 
 """
 
