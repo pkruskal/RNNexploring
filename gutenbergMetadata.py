@@ -1,8 +1,9 @@
 
-"""Extract metadata from Project Gutenberg RDF catalog into a Python dict.
+"""
+Extract metadata from Project Gutenberg RDF catalog into a Python dict.
 Based on https://bitbucket.org/c-w/gutenberg/
->>> md = readmetadata()
->>> md[123]
+ >> md = readmetadata()
+ >> md[123]
 {'LCC': {'PS'},
  'author': u'Burroughs, Edgar Rice',
  'authoryearofbirth': 1875,
@@ -47,13 +48,8 @@ NS = dict(
 		dcam='http://purl.org/dc/dcam/',
 		rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#')
 LINEBREAKRE = re.compile(r'[ \t]*[\n\r]+[ \t]*')
-ETEXTRE = re.compile(r'''
-	e(text|b?ook)
-	\s*
-	(\#\s*(?P<etextid_front>\d+)
-	|
-	(?P<etextid_back>\d+)\s*\#)
-	''', re.IGNORECASE | re.VERBOSE)
+ETEXTRE = re.compile(r'''e(text|b?ook)\s*(\#\s*(?P<etextid_front>\d+)|(?P<etextid_back>\d+)\s*\#)''',
+                     re.IGNORECASE | re.VERBOSE)
 
 
 def readmetadata():
@@ -197,7 +193,7 @@ def etextno(lines):
 def fixsubtitles(title):
 	"""Introduce any subtitle with (semi)colons instead of newlines.
 	The first subtitle is introduced with a colon, the rest with semicolons.
-	>>> fixsubtitles(u'First Across ...\r\nThe Story of ... \r\n'
+	>> fixsubtitles(u'First Across ...\r\nThe Story of ... \r\n'
 	... 'Being an investigation into ...')
 	u'First Across ...: The Story of ...; Being an investigation into ...'"""
 	tmp = LINEBREAKRE.sub(': ', title, 1)

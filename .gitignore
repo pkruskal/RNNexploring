@@ -3,3 +3,10 @@
 *.xml
 AurthorAI/.idea/.name
 *.iml
+<<<<<<< HEAD
+.idea/vcs.xml
+*.xml
+.idea/workspace.xml
+*.xml
+=======
+>>>>>>> 75eea2c3730af003e079819ee248381b7356fcf5
