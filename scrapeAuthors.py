@@ -117,7 +117,7 @@ def vocabularize(textList):
     #robustWords = vocabDF[vocabDF['count'] >= minOccurences]
     #weakWords = vocabDF[vocabDF['count'] < minOccurences]
 
-    return truncatedVocab
+    return truncatedVocab, tokenTextList
 
 def oldVocabNotes():
     ###############
@@ -172,9 +172,11 @@ def sentenceTrainer(bookList):
 
 def chapterTrainer():
     #isolate chapters and then sentences
+    pass
 
 def paragraphTrainer():
     #try to isolate out paragraps?
+    pass
 
 def isolateTextCompentents(textList):
     '''
@@ -187,8 +189,8 @@ def isolateTextCompentents(textList):
 
     chapterExpression = 'CHAPTER'
 
-    for text in textList
-    words = nltk.tokenize.wordpunct_tokenize(text)
+    for text in textList:
+        words = nltk.tokenize.wordpunct_tokenize(text)
 
     sentences = nltk.sent_tokenize(text)
 
@@ -219,9 +221,9 @@ def janeAusten():
 
     janeAustenSentences = sentenceTrainer(janeAustenTexts)
 
-    vocab = vocabularize(janeAustenSentences)
+    vocab, tokenTextList = vocabularize(janeAustenSentences)
 
-    return vocab, janeAustenSentences
+    return vocab, janeAustenSentences, tokenTextList
 
 """
 
