@@ -118,11 +118,20 @@ def vocabularize(textList,minWordOccurance = 3):
     #truncate vocabulary based on minimum number of occurences of word or POS
 
     vocabDF['truncatedWords'] = vocabDF['word']
+
+    #count POS for minimally occuring words
+    vocabDF['POSrestCount'] = vocabDF['posCount']
+    posCountRestricted = vocabDF[vocabDF['wordCount'] < minWordOccurance].groupby('POS').count()
+    result = pd.merge(vocabDF, posCountRestricted, left_on='POS', right_index=True, how='left', sort=False)
+    vocabDF['POSrestCount'] = result['POSrestCount_y']
     #set words that don't occure often by their POS
     vocabDF['truncatedWords'][vocabDF['wordCount'] < minWordOccurance] = vocabDF['POS'][vocabDF['wordCount'] < minWordOccurance]
+
     #if even the POS doesn't occure often then set to a default place holder
-    #ToDo :: I think there is a bug in this right now, need to make sure the count for POS is occuring just over the min occuring words
-    vocabDF['truncatedWords'][vocabDF['wordCount'] < minWordOccurance][vocabDF['posCount'] < minWordOccurance] = 'PlaceHolder'
+    placeHolderIndex = vocabDF[vocabDF['wordCount'] < minWordOccurance][vocabDF['POSrestCount'] < minWordOccurance].index.values
+    vocabDF.ix[placeHolderIndex,'truncatedWords'] = 'PlaceHolder'
+
+
     #make truncated reference table
     truncatedVocab = vocabDF.drop_duplicates('truncatedWords')
     truncatedVocab['word'] = truncatedVocab['truncatedWords']
@@ -135,6 +144,7 @@ def vocabularize(textList,minWordOccurance = 3):
 
     return truncatedVocab
 
+def oldVocabNotes():
     ###############
 
     # isolate POS for words below threshold
@@ -147,7 +157,7 @@ def vocabularize(textList,minWordOccurance = 3):
     # now can return the full vocabDF, and the vocabTruncate
 
 
-
+    """
     sortedVocab = sorted(word_freq.items(), key=lambda x: (x[1], x[0]), reverse=True)
 
 
@@ -177,6 +187,8 @@ def vocabularize(textList,minWordOccurance = 3):
     # need to get vocab
     # need to cut off vocab and then replace words with their part of speech
     return vocab
+    """
+
 
 def sentenceTrainer(bookList):
     #isolate out all sentences
@@ -585,6 +597,7 @@ authors to add
 '''
 
 """
+
 
 powSentences = []
 for isentence, sentence in enumerate(sentences):
