@@ -37,8 +37,8 @@ try:
 except ImportError:
 	import pickle
 
-PICKLEFILE = 'data/md.pickle.gz'  # The Python dict produced by this module
-RDFFILES = 'data/rdf-files.tar.bz2'  # The catalog downloaded from Gutenberg
+PICKLEFILE = '../Data/md.pickle.gz'  # The Python dict produced by this module
+RDFFILES = '../Data/rdf-files.tar.bz2'  # The catalog downloaded from Gutenberg
 RDFURL = r'http://www.gutenberg.org/cache/epub/feeds/rdf-files.tar.bz2'
 META_FIELDS = ('id', 'author', 'title', 'downloads', 'formats', 'type', 'LCC',
 		'subjects', 'authoryearofbirth', 'authoryearofdeath', 'language')
