@@ -197,10 +197,13 @@ def sentenceTrainer(bookList):
 
 def chapterTrainer():
     #isolate chapters and then sentences
+    pass
 
 def paragraphTrainer():
     #try to isolate out paragraps?
+    pass
 
+"""
 def isolateTextCompentents(textList):
     '''
     take a list of texts and try to break them down
@@ -229,6 +232,7 @@ def isolateTextCompentents(textList):
 
     tokenizer = nltk.tokenize.RegexpTokenizer('CHAPTER',gaps=True)
     chapters = tokenizer.tokenize(text)
+"""
 
 ##### isolate Jane Austin Texts ####
 def janeAusten():
@@ -555,46 +559,10 @@ def brit19thCentury():
 
     '''
 
-    #Jane Ausin
-
-    #Sir Walter Scott (1771–1832),
-
-    #Elizabeth Gaskell (1810–65)
-
-    #Brontë sisters, Emily, Charlotte and Anne, were other significant novelists in the 1840s and 1850s
-
-    #George Eliot's (Mary Ann Evans (1819–80)
-
-    #Anthony Trollope's (1815–82)
-
-
-
-'''
-authors to add
 
 
 
 
- Sir Walter Scott (1771–1832),
- most important British novelist at the beginning of the early 19th century was Sir Walter Scott, who was not only a highly successful British novelist, but "the greatest single influence on fiction in the 19th century
-
-
- Charles Dickens (1812–70)
- rarly rival to Dickens was William Makepeace Thackeray (1811–63),
-
-  Brontë sisters, Emily, Charlotte and Anne, were other significant novelists in the 1840s and 1850s
-
-  Elizabeth Gaskell (1810–65)
-  North and South contrasts the lifestyle in the industrial north of England with the wealthier south
-
-  Anthony Trollope's (1815–82) was one of the most successful, prolific and respected English novelists of the Victorian era.
-   set in the imaginary west country county of Barsetshire, including The Warden (1855) and Barchester Towers (1857).
-
-
-   George Eliot's (Mary Ann Evans (1819–80)
-    a major novelist of the mid-Victorian period.
-    works, especially Middlemarch 1871-2), are important examples of literary realism,
-'''
 
 """
 
