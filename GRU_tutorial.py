@@ -109,8 +109,9 @@ class GRUTheano:
         #                     known_grads=None, return_disconnected='zero', null_gradients='raise')
         #Return symbolic gradients for one or more variables with respect to some cost.
         #
-        # cost (scalar (0-dimensional) tensor variable or None) – Value with respect to which we are differentiating. May be None if known_grads is provided.
-        # wrt (variable or list of variables) – term[s] for which we want gradients
+        # cost (scalar (0-dimensional) tensor variable or None) Value with respect to which we are differentiating.
+        # May be None if known_grads is provided.
+        # wrt (variable or list of variables) - term[s] for which we want gradients
         #
         #grad(inputs, output_gradients)
         #http://deeplearning.net/software/theano/extending/op.html#grad
