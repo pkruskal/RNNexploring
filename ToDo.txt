@@ -1,0 +1,12 @@
+gotten up to line 26 in train.py but failed to fully load in the data
+
+Work in scrape authors for saving and loading processed texts
+  need to build unpickling scripts in scrapeAuthors after text has been parsed
+  need to build a function to check if text has already been parsed to keep from re-runing it
+
+make a seperate function for parsing text and identifying sentences, words, and POS
+  the current on is really really slow!!
+  perhaps add identificaiton of chapters/paragraphs/etc. (could speed things up?)
+  save this data and make it checkable and loadable since it is a huge time sink
+  rewrite def vocabularize to take advantage of this
+

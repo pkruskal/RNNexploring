@@ -8,6 +8,16 @@ import gutenbergMetadata as gbMeta
 import gutenbergText as gbTxt
 import itertools
 import ast
+import time
+
+
+#todo
+#make a seperate function for parsing text and identifying sentences, words, and POS
+#   perhaps add identificaiton of chapters/paragraphs/etc.
+#   save this data and make it checkable and loadable since it is a huge time sink
+#   rewrite def vocabularize to take advantage of this
+
+VERBATUM = True
 
 def gatherMetadata():
     md = gbMeta.readmetadata()
@@ -89,10 +99,11 @@ def vocabularize(textList,minWordOccurance = 3):
         if strFlag:
             #assumption here that if the first element is a str then they all are
             #tokenizedText = [nltk.word_tokenize(thisText) for thisText in textBranch]
+            tic = time.time()
             tokenizedText = [nltk.pos_tag(nltk.word_tokenize(thisText)) for thisText in textBranch]
             vocabList.extend(tokenizedText)
             tokenTextList.append(tokenizedText)
-            print('finished sentences for a branch')
+            print('finished sentences for a branch in ' + str(time.time()-tic))
         else:
             for nextText in textBranch:
                 loopTexts(nextText)
@@ -101,18 +112,23 @@ def vocabularize(textList,minWordOccurance = 3):
     loopTexts(textList)
 
     #make a final array of words and do a freq dist on them
+    tic = time.clock()
     word_freq = nltk.FreqDist(itertools.chain(*vocabList))
+
 
     #make this a pandas table
     wordStats = [(word[0][0],word[0][1],word[1]) for word in word_freq.items()]
     vocabDF = pd.DataFrame(wordStats,columns=['word','POS','wordCount'])
     vocabDF.sort('wordCount',ascending=False,inplace = True)
+    print('took ' + str(time.clock() - tic) + ' seconds')
 
     #add in POS counts
     posCount = vocabDF.groupby('POS').count()
     posCount['posCount'] = posCount['wordCount']
     result = pd.merge(vocabDF, posCount, left_on='POS', right_index=True, how='left', sort=False)
     vocabDF['posCount'] = result['posCount']
+
+    #vocabDF.to_csv('../data/janeAustinFullVocabTable.tsv',sep = '\t',encoding = 'utf-8')
 
 
     #truncate vocabulary based on minimum number of occurences of word or POS
@@ -244,10 +260,20 @@ def janeAusten():
     #trying to just restrict to books
     janeAustenData = janeAustenData.ix[[101,115,133,150,153,908,1298]]
 
+    if VERBATUM:
+        print('gathering texts')
     janeAustenTexts = gatherAuthorTexts(janeAustenData)
 
+    if VERBATUM:
+        print('parsing sentences')
+        tic = time.time()
     janeAustenSentences = sentenceTrainer(janeAustenTexts)
+    if VERBATUM:
+        print('sentences parse in ' + str(time.time()-tic))
 
+
+    if VERBATUM:
+        print('parsing vocabulary')
     vocab, tokenTextList = vocabularize(janeAustenSentences)
 
     '''

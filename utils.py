@@ -24,9 +24,13 @@ CHAPTER_START_TOKEN = "PARAGRAPH_START"
 CHAPTER_END_TOKEN = "PARAGRAPH_END"
 
 
-def prepairData():
+def prepairData(TRAINING_CORPUS):
 
-    vocab, sentences, tokenedSentences = gbData.janeAusten()
+    if TRAINING_CORPUS == 'JaneAustin':
+        vocab, sentences, tokenedSentences = gbData.janeAusten()
+        ""
+    else:
+        raise ValueError('error with training corpus')
 
     #preume did main function of scrapeAuthors
     #have vocab DF of words, their index
