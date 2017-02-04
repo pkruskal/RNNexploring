@@ -25,7 +25,7 @@ if not MODEL_OUTPUT_FILE:
   MODEL_OUTPUT_FILE = "GRU-%s-%s-%s-%s.dat" % (ts, TRAINING_CORPUS, EMBEDDING_DIM, HIDDEN_DIM)
 
 # Load data
-x_train, y_train, word_to_index, index_to_word = load_data(TRAINING_CORPUS)
+x_train, y_train, word_to_index, index_to_word = prepairData(TRAINING_CORPUS)
 
 #need to check this
 #VOCABULARY_SIZE = word_to_index.shape[0]

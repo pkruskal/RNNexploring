@@ -12,8 +12,8 @@ from _domainModel_text import LEGALESE_START_MARKERS
 
 if os.path.exists('.../Data/text'):
     _TEXT_CACHE = '.../Data/text'
-elif os.path.exists('../Data/text'):
-    _TEXT_CACHE = '../Data/text'
+elif os.path.exists('../data/text'):
+    _TEXT_CACHE = '../data/text'
 elif os.path.exists('./Data/text'):
     _TEXT_CACHE = './Data/text'
 else:

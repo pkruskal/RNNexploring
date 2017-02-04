@@ -1,4 +1,12 @@
 
+
+import os
+import re
+import gzip
+import tarfile
+import urllib
+import xml.etree.cElementTree as ElementTree
+
 """
 Extract metadata from Project Gutenberg RDF catalog into a Python dict.
 Based on https://bitbucket.org/c-w/gutenberg/
@@ -26,19 +34,14 @@ Based on https://bitbucket.org/c-w/gutenberg/
  'type': 'Text'}
 """
 
-import os
-import re
-import gzip
-import tarfile
-import urllib
-import xml.etree.cElementTree as ElementTree
+
 try:
 	import cPickle as pickle
 except ImportError:
 	import pickle
 
-PICKLEFILE = '../Data/md.pickle.gz'  # The Python dict produced by this module
-RDFFILES = '../Data/rdf-files.tar.bz2'  # The catalog downloaded from Gutenberg
+PICKLEFILE = './Data/md.pickle.gz'  # The Python dict produced by this module
+RDFFILES = './Data/rdf-files.tar.bz2'  # The catalog downloaded from Gutenberg
 RDFURL = r'http://www.gutenberg.org/cache/epub/feeds/rdf-files.tar.bz2'
 META_FIELDS = ('id', 'author', 'title', 'downloads', 'formats', 'type', 'LCC',
 		'subjects', 'authoryearofbirth', 'authoryearofdeath', 'language')
