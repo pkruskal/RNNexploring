@@ -3,21 +3,27 @@ __author__ = 'peter'
 import pandas as pd
 import nltk
 import numpy as np
-import re
 import gutenbergMetadata as gbMeta
 import gutenbergText as gbTxt
 import itertools
-import ast
 import time
+import os
+import pickle
 
 
-#todo
-#make a seperate function for parsing text and identifying sentences, words, and POS
+# import ast
+# import re
+
+
+# todo
+# make a seperate function for parsing text and identifying sentences, words, and POS
 #   perhaps add identificaiton of chapters/paragraphs/etc.
 #   save this data and make it checkable and loadable since it is a huge time sink
 #   rewrite def vocabularize to take advantage of this
 
+
 VERBATUM = True
+
 
 def gatherMetadata():
     md = gbMeta.readmetadata()
@@ -82,9 +88,9 @@ def gatherAuthorTexts(authorMetadata):
     return textList
 
 
-def vocabularize(textList,minWordOccurance = 3):
-    #a bit of a catch all messy function
-    #takes any list of lists of texts and will extract the vocabulary from it
+def vocabularize(textList,minWordOccurance = 3,savePicklePath = None):
+    # a bit of a catch all messy function
+    # takes any list of lists of texts and will extract the vocabulary from it
     vocabList = []
     tokenTextList = []
     def loopTexts(textBranch):
@@ -108,30 +114,37 @@ def vocabularize(textList,minWordOccurance = 3):
             for nextText in textBranch:
                 loopTexts(nextText)
 
-    #to keep things flexable this allows texts to be stored in lists of lists of arbitrary depth
-    loopTexts(textList)
+    if savePicklePath:
+        if os.path.isfile(savePicklePath):
+            tokenTextList = pickle.load(open(savePicklePath))
+            vocabList = np.concatenate(tokenTextList)
+        else:
+            # to keep things flexable this allows texts to be stored in lists of lists of arbitrary depth
+            loopTexts(textList)
+            pickle.dump(open(savePicklePath))
+    else:
+        # to keep things flexable this allows texts to be stored in lists of lists of arbitrary depth
+        loopTexts(textList)
 
-    #make a final array of words and do a freq dist on them
+    # make a final array of words and do a freq dist on them
     tic = time.clock()
     word_freq = nltk.FreqDist(itertools.chain(*vocabList))
 
 
-    #make this a pandas table
+    # make this a pandas table
     wordStats = [(word[0][0],word[0][1],word[1]) for word in word_freq.items()]
     vocabDF = pd.DataFrame(wordStats,columns=['word','POS','wordCount'])
     vocabDF.sort('wordCount',ascending=False,inplace = True)
     print('took ' + str(time.clock() - tic) + ' seconds')
 
-    #add in POS counts
+    # add in POS counts
     posCount = vocabDF.groupby('POS').count()
     posCount['posCount'] = posCount['wordCount']
     result = pd.merge(vocabDF, posCount, left_on='POS', right_index=True, how='left', sort=False)
     vocabDF['posCount'] = result['posCount']
+    # vocabDF.to_csv('../data/janeAustinFullVocabTable.tsv',sep = '\t',encoding = 'utf-8')
 
-    #vocabDF.to_csv('../data/janeAustinFullVocabTable.tsv',sep = '\t',encoding = 'utf-8')
-
-
-    #truncate vocabulary based on minimum number of occurences of word or POS
+    # truncate vocabulary based on minimum number of occurences of word or POS
 
     vocabDF['truncatedWords'] = vocabDF['word']
 
@@ -146,7 +159,6 @@ def vocabularize(textList,minWordOccurance = 3):
     #if even the POS doesn't occure often then set to a default place holder
     placeHolderIndex = vocabDF[vocabDF['wordCount'] < minWordOccurance][vocabDF['POSrestCount'] < minWordOccurance].index.values
     vocabDF.ix[placeHolderIndex,'truncatedWords'] = 'PlaceHolder'
-
 
     #make truncated reference table
     truncatedVocab = vocabDF.drop_duplicates('truncatedWords')
@@ -255,10 +267,13 @@ def janeAusten():
     #TODO::
     # data currently stored in a parent directory but we should change this to the main directory
     # and then add a git ignore to keep it from synching
+
     metadata = pd.read_csv('../listOfEnglishDocs.csv')
     janeAustenData = metadata[metadata['author'] == 'Austen, Jane']
     #trying to just restrict to books
     janeAustenData = janeAustenData.ix[[101,115,133,150,153,908,1298]]
+
+    picklePath = './janeAustenTokenSentences.pickle'
 
     if VERBATUM:
         print('gathering texts')
@@ -291,7 +306,7 @@ def janeAusten():
 
     '''
 
-    return vocab, janeAustenSentences
+    return vocab, janeAustenSentences, tokenTextList
 
 
 
