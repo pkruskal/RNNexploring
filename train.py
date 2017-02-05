@@ -3,6 +3,7 @@ __author__ = 'peter'
 import sys
 import os
 import time
+import pickle
 import numpy as np
 from utils import *
 from datetime import datetime
@@ -17,6 +18,9 @@ NEPOCH = int(os.environ.get("NEPOCH", "20"))
 MODEL_OUTPUT_FILE = os.environ.get("MODEL_OUTPUT_FILE")
 PRINT_EVERY = int(os.environ.get("PRINT_EVERY", "25000"))
 
+SAVETEXTDATA = True
+TEXTDATA_PATH = './janeAustinRunData.pickle'
+
 #VOCABULARY_SIZE = int(os.environ.get("VOCABULARY_SIZE", "2000")) setting this dynamically
 #INPUT_DATA_FILE = os.environ.get("INPUT_DATA_FILE", "./data/reddit-comments-2015.csv")
 
@@ -24,11 +28,32 @@ if not MODEL_OUTPUT_FILE:
   ts = datetime.now().strftime("%Y-%m-%d-%H-%M")
   MODEL_OUTPUT_FILE = "GRU-%s-%s-%s-%s.dat" % (ts, TRAINING_CORPUS, EMBEDDING_DIM, HIDDEN_DIM)
 
+
 # Load data
-x_train, y_train, word_to_index, index_to_word = prepairData(TRAINING_CORPUS)
+if os.path.isfile(TEXTDATA_PATH):
+  f = open(TEXTDATA_PATH)
+  dataDict = pickle.load(f)
+  f.close()
+  x_train = dataDict['x_train']
+  y_train = dataDict['y_train']
+  word_to_index = dataDict['word_to_index']
+  index_to_word =  dataDict['index_to_word']
+else:
+  x_train, y_train, word_to_index, index_to_word = prepairData(TRAINING_CORPUS)
+
+if SAVETEXTDATA:
+  data = {
+    'x_train' : x_train,
+    'y_train': y_train,
+    'word_to_index': word_to_index,
+    'index_to_word': index_to_word
+  }
+  f = open(TEXTDATA_PATH,'w')
+  pickle.dump(data,f)
+  f.close()
 
 #need to check this
-#VOCABULARY_SIZE = word_to_index.shape[0]
+VOCABULARY_SIZE = len(word_to_index)
 
 # Build model
 model = GRUTheano(VOCABULARY_SIZE, hidden_dim=HIDDEN_DIM, bptt_truncate=-1)

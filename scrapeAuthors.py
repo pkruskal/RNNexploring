@@ -114,23 +114,27 @@ def vocabularize(textList,minWordOccurance = 3,savePicklePath = None):
             for nextText in textBranch:
                 loopTexts(nextText)
 
-    if savePicklePath:
-        if os.path.isfile(savePicklePath):
+
+    if savePicklePath and os.path.isfile(savePicklePath):
+        try:
             tokenTextList = pickle.load(open(savePicklePath))
-            vocabList = np.concatenate(tokenTextList)
-        else:
-            # to keep things flexable this allows texts to be stored in lists of lists of arbitrary depth
-            loopTexts(textList)
-            pickle.dump(open(savePicklePath))
+        except:
+            f= open(savePicklePath)
+            tokenTextList = pickle.load(f.buffer)
+            f.close()
+
+
+        vocabList = np.concatenate(tokenTextList)
     else:
         # to keep things flexable this allows texts to be stored in lists of lists of arbitrary depth
         loopTexts(textList)
+        if savePicklePath:
+            pickle.dump(open(savePicklePath))
 
     # make a final array of words and do a freq dist on them
 
     tic = time.clock()
-    word_freq = nltk.FreqDist(itertools.chain(*vocabList))
-
+    word_freq = nltk.FreqDist([(word[0],word[1]) for word in vocabList])
 
     # make this a pandas table
     wordStats = [(word[0][0],word[0][1],word[1]) for word in word_freq.items()]
@@ -264,17 +268,25 @@ def isolateTextCompentents(textList):
 """
 
 ##### isolate Jane Austin Texts ####
-def janeAusten():
+def janeAusten(loadPath = None):
+    '''
+    loadPath = './janeAustenTokenSentences.pickle'
+    :param loadPath:
+    :return:
+    '''
+
     #TODO::
     # data currently stored in a parent directory but we should change this to the main directory
     # and then add a git ignore to keep it from synching
+
+
+
 
     metadata = pd.read_csv('../listOfEnglishDocs.csv')
     janeAustenData = metadata[metadata['author'] == 'Austen, Jane']
     #trying to just restrict to books
     janeAustenData = janeAustenData.ix[[101,115,133,150,153,908,1298]]
 
-    picklePath = './janeAustenTokenSentences.pickle'
 
     if VERBATUM:
         print('gathering texts')
@@ -287,10 +299,15 @@ def janeAusten():
     if VERBATUM:
         print('sentences parse in ' + str(time.time()-tic))
 
-
     if VERBATUM:
         print('parsing vocabulary')
-    vocab, tokenTextList = vocabularize(janeAustenSentences)
+    if loadPath and os.path.isfile(loadPath):
+        vocab, tokenTextList = vocabularize(janeAustenSentences,savePicklePath = loadPath)
+    else:
+        vocab, tokenTextList = vocabularize(janeAustenSentences)
+
+
+
 
     '''
     similar to jane auting
