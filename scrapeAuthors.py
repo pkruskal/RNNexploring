@@ -110,7 +110,6 @@ def vocabularize(textList,minWordOccurance = 3):
 
     #to keep things flexable this allows texts to be stored in lists of lists of arbitrary depth
     loopTexts(textList)
-
     #make a final array of words and do a freq dist on them
     tic = time.clock()
     word_freq = nltk.FreqDist(itertools.chain(*vocabList))
@@ -291,7 +290,7 @@ def janeAusten():
 
     '''
 
-    return vocab, janeAustenSentences
+    return vocab, janeAustenSentences, tokenTextList
 
 
 
