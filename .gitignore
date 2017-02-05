@@ -2,9 +2,6 @@
 .idea/misc.xml
 .idea/vcs.xml
 .idea/modules.xml
-*.xml
 AurthorAI/.idea/.name
+*.xml
 *.iml
-*.xml
-*.xml
-

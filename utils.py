@@ -24,9 +24,13 @@ CHAPTER_START_TOKEN = "PARAGRAPH_START"
 CHAPTER_END_TOKEN = "PARAGRAPH_END"
 
 
-def prepairData():
+def prepairData(TRAINING_CORPUS):
 
-    vocab, sentences = gbData.janeAusten()
+    if TRAINING_CORPUS == 'JaneAustin':
+        vocab, sentences, tokenedSentences = gbData.janeAusten()
+        ""
+    else:
+        raise ValueError('error with training corpus')
 
     #preume did main function of scrapeAuthors
     #have vocab DF of words, their index
@@ -43,21 +47,27 @@ def prepairData():
     word_to_index = wordIndexedVocab['index'].to_dict()
     #word_to_index = dict([(w, i) for i, w in enumerate(index_to_word)])
 
-    # Replace all words not in our vocabulary with the part of speach
-    for i, sent in enumerate(sentences):
-        for word in sent:
-            if word[0] in word_to_index.keys():
-                word = word[0]
-            elif word[1] in word_to_index.keys():
-                word = word[1]
-            else:
-                word = 'Token'
+    tockenIndex = len(index_to_word)
+    index_to_word[tockenIndex] = 'Token'
+    word_to_index['Token'] = tockenIndex
 
-        tokenized_sentences[i] = [w[0] if w[0] in word_to_index.keys() else w[1] for w in sent]
+    # Replace all words not in our vocabulary with the part of speach
+    for ibook , book in enumerate(tokenedSentences):
+        for isent, sent in enumerate(book):
+            for iword, word in enumerate(sent):
+                if word[0] in word_to_index.keys():
+                    word = word[0]
+                elif word[1] in word_to_index.keys():
+                    word = word[1]
+                else:
+                    word = 'Token'
+                tokenedSentences[ibook][isent][iword] = word
+
+        #tokenized_sentences[i] = [w[0] if w[0] in word_to_index.keys() else w[1] for w in sent]
 
     # Create the training data
-    X_train = np.asarray([[word_to_index[w] for w in sent[:-1]] for sent in tokenized_sentences])
-    y_train = np.asarray([[word_to_index[w] for w in sent[1:]] for sent in tokenized_sentences])
+    X_train = np.asarray([[word_to_index[w] for w in sent[:-1]] for sent in book for book in tokenedSentences])
+    y_train = np.asarray([[word_to_index[w] for w in sent[1:]] for sent in book for book in tokenedSentences])
 
     return X_train, y_train, word_to_index, index_to_word
 
